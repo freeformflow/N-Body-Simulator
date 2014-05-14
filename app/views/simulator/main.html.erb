@@ -1,5 +1,19 @@
 <h1>N-Body Simulator</h1>
 
-<button onclick='window.Engine.Main()'> Begin Simulation </button> <br> <br>
-<canvas id='view' width='600px' height='600px' style='border:solid'> </canvas>
-<p id='monitor'> </p>
+<button id='start_button' onclick='window.Engine.Initialize()'> Begin Simulation </button> <br> <br>
+
+<canvas id='view' width='600px' height='600px'> </canvas>
+
+<div id='controls'>
+  <p> Number of Particles: </p>
+  <input type='number' id='n_control' onchange='window.Engine.ChangeN()' value='200' min='0' step='1'>
+
+  <p> Gravity Strength: </p>
+  <input type='number' id='G_control' onchange='window.Engine.ChangeG()' value='1000'>
+
+  <p> Initial Speed: </p>
+  <input type='number' id='Vi_control' value='20'>
+
+  <p> Timestep Size: (Careful large sizes lead to numerical instability.) </p>
+  <input type='number' id='dt_control' onchange='window.Engine.Changedt()' value='0.1'>
+</div>
