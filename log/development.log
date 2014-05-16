@@ -30894,3 +30894,177 @@ Started GET "/assets/reset.png" for 127.0.0.1 at 2014-05-16 00:35:48 -0700
 
 
 Started GET "/assets/settings.png" for 127.0.0.1 at 2014-05-16 00:35:48 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2014-05-16 15:21:08 -0700
+Processing by SimulatorController#main as HTML
+  Rendered simulator/main.html.erb within layouts/application (1.3ms)
+Completed 200 OK in 67ms (Views: 66.7ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/simulator.css?body=1" for 127.0.0.1 at 2014-05-16 15:21:08 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-05-16 15:21:08 -0700
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-05-16 15:21:08 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-05-16 15:21:08 -0700
+
+
+Started GET "/assets/simulator.js?body=1" for 127.0.0.1 at 2014-05-16 15:21:08 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-05-16 15:21:08 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-05-16 15:21:08 -0700
+
+
+Started GET "/assets/pandastrike_logo.png" for 127.0.0.1 at 2014-05-16 15:21:08 -0700
+
+
+Started GET "/assets/pause.png" for 127.0.0.1 at 2014-05-16 15:21:08 -0700
+
+
+Started GET "/assets/reset.png" for 127.0.0.1 at 2014-05-16 15:21:08 -0700
+
+
+Started GET "/assets/play.png" for 127.0.0.1 at 2014-05-16 15:21:08 -0700
+
+
+Started GET "/assets/settings.png" for 127.0.0.1 at 2014-05-16 15:21:08 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2014-05-16 15:22:32 -0700
+Processing by SimulatorController#main as HTML
+  Rendered simulator/main.html.erb within layouts/application (1.7ms)
+Completed 200 OK in 7ms (Views: 6.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/simulator.css?body=1" for 127.0.0.1 at 2014-05-16 15:22:32 -0700
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-05-16 15:22:32 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-05-16 15:22:32 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-05-16 15:22:32 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-05-16 15:22:32 -0700
+
+
+Started GET "/assets/simulator.js?body=1" for 127.0.0.1 at 2014-05-16 15:22:32 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-05-16 15:22:32 -0700
+
+
+Started GET "/assets/pandastrike_logo.png" for 127.0.0.1 at 2014-05-16 15:22:32 -0700
+
+
+Started GET "/assets/play.png" for 127.0.0.1 at 2014-05-16 15:22:32 -0700
+
+
+Started GET "/assets/pause.png" for 127.0.0.1 at 2014-05-16 15:22:32 -0700
+
+
+Started GET "/assets/reset.png" for 127.0.0.1 at 2014-05-16 15:22:32 -0700
+
+
+Started GET "/assets/settings.png" for 127.0.0.1 at 2014-05-16 15:22:32 -0700
+
+
+Started GET "/assets/logo.ico" for 127.0.0.1 at 2014-05-16 15:22:32 -0700
+
+
+Started GET "/" for 127.0.0.1 at 2014-05-16 15:24:51 -0700
+Processing by SimulatorController#main as HTML
+  Rendered simulator/main.html.erb within layouts/application (9.5ms)
+Completed 200 OK in 16ms (Views: 15.3ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/simulator.css?body=1" for 127.0.0.1 at 2014-05-16 15:24:51 -0700
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-05-16 15:24:51 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-05-16 15:24:51 -0700
+
+
+Started GET "/assets/simulator.js?body=1" for 127.0.0.1 at 2014-05-16 15:24:51 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-05-16 15:24:51 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-05-16 15:24:51 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-05-16 15:24:51 -0700
+
+
+Started GET "/assets/pandastrike_logo.png" for 127.0.0.1 at 2014-05-16 15:24:51 -0700
+
+
+Started GET "/assets/play.png" for 127.0.0.1 at 2014-05-16 15:24:51 -0700
+
+
+Started GET "/assets/pause.png" for 127.0.0.1 at 2014-05-16 15:24:51 -0700
+
+
+Started GET "/assets/reset.png" for 127.0.0.1 at 2014-05-16 15:24:51 -0700
+
+
+Started GET "/assets/settings.png" for 127.0.0.1 at 2014-05-16 15:24:51 -0700
+
+
+Started GET "/assets/logo.ico" for 127.0.0.1 at 2014-05-16 15:24:51 -0700
+
+
+Started GET "/about" for 127.0.0.1 at 2014-05-16 15:25:21 -0700
+Processing by SimulatorController#about as HTML
+  Rendered simulator/about.html.erb within layouts/application (1.3ms)
+Completed 200 OK in 9ms (Views: 8.5ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/pandastrike_logo.png" for 127.0.0.1 at 2014-05-16 15:25:21 -0700
+
+
+Started GET "/about" for 127.0.0.1 at 2014-05-16 15:25:59 -0700
+Processing by SimulatorController#about as HTML
+  Rendered simulator/about.html.erb within layouts/application (0.9ms)
+Completed 200 OK in 6ms (Views: 5.0ms | ActiveRecord: 0.0ms)
+
+
+Started GET "/assets/application.css?body=1" for 127.0.0.1 at 2014-05-16 15:25:59 -0700
+
+
+Started GET "/assets/jquery_ujs.js?body=1" for 127.0.0.1 at 2014-05-16 15:25:59 -0700
+
+
+Started GET "/assets/jquery.js?body=1" for 127.0.0.1 at 2014-05-16 15:25:59 -0700
+
+
+Started GET "/assets/simulator.css?body=1" for 127.0.0.1 at 2014-05-16 15:25:59 -0700
+
+
+Started GET "/assets/turbolinks.js?body=1" for 127.0.0.1 at 2014-05-16 15:25:59 -0700
+
+
+Started GET "/assets/simulator.js?body=1" for 127.0.0.1 at 2014-05-16 15:25:59 -0700
+
+
+Started GET "/assets/application.js?body=1" for 127.0.0.1 at 2014-05-16 15:25:59 -0700
+
+
+Started GET "/assets/pandastrike_logo.png" for 127.0.0.1 at 2014-05-16 15:25:59 -0700
+
+
+Started GET "/assets/logo.ico" for 127.0.0.1 at 2014-05-16 15:25:59 -0700

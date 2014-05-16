@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-<html>
-
 
 <body>
 <div id='nav_bar'>
@@ -44,20 +42,20 @@
     <br> <br>
 
     <p> Gravity Strength: </p>
-    0 <input type="range" id='G_control' onchange='window.Engine.ChangeG()'
-    min='0' max='10000' value='1000' step='1'> 10,000
+    None <input type="range" id='G_control' onchange='window.Engine.ChangeG()'
+    min='0' max='10000' value='1000' step='1'> Strong
 
     <br> <br>
 
-    <p> Initial Speed: </p>
-    -100 <input type='range' id='Vi_control' value='20'
-    min='-100' max='100' value='20' step='1'> 100
+    <p> Starting Rotation Speed: </p>
+    Clockwise <input type='range' id='Vi_control' value='20'
+    min='-100' max='100' value='20' step='1'> Counter-Clockwise
 
     <br> <br>
 
-    <p> Timestep Size: </p>
-    0.1 <input type='range' id='dt_control' onchange='window.Engine.Changedt()'
-    min='0.01' max='1' step='0.01' value='0.1'> 1
+    <p> Speed: </p>
+    Slow <input type='range' id='dt_control' onchange='window.Engine.Changedt()'
+    min='0.01' max='1' step='0.01' value='0.4'> Fast
 
     <br> <br>
 
