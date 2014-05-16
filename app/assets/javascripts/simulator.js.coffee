@@ -10,11 +10,39 @@ Engine.run = false
 # This block contains all code for the view that displays the simulation.
 #-------------------------------------------------------------------------------
 
+View.SizeCanvas = () ->
+  # This function will size the canvas according how the User is viewing the page.
+  # The goal is to have a responsive layout, including support for mobile viewing.
+  w = window.innerWidth
+  h = window.innerHeight
+
+  if w > h
+    document.getElementById('view').width = 0.95 * w
+    document.getElementById('view').height = 0.95 * (h - 200)
+    View.body_size = h / 300
+
+  else
+    document.getElementById('view').width = 0.95 * w
+    document.getElementById('view').height = 0.95 * w
+    View.body_size = w / 250
+
+
+  # Now set the size of the Settings interface overlay.
+  if w > h
+    document.getElementById('settings_overlay').width = 0.95 * w
+    document.getElementById('settings_overlay').height = 0.95 * (h - 200)
+  else
+    document.getElementById('settings_overlay').width = 0.95 * w
+    document.getElementById('settings_overlay').height = 0.95 * w
+
+  document.getElementById('settings').style.display = 'none'
+
+
 # Initialize the canvas view.
 View.InitializeViewport = () ->
-  View.background_color = '#87CEFA'
-  View.body_core_color = '#1874CD'
-  View.body_size = 3
+  View.background_color = '#0066FF'
+  View.body_core_color = '#003380'
+
 
   View.canvas = document.getElementById 'view'
   View.ctx = View.canvas.getContext '2d'
@@ -41,7 +69,7 @@ View.Update = () ->
   # Rinse and repeat...  This recursive will call itself indefinitely.
   callback = -> View.Update()
   #window.requestAnimationFrame callback
-  window.setTimeout callback, 20
+  View.render_id = window.setTimeout callback, 20
 
 
 # This function draws a single particle.  It will be called frequently, haha.
@@ -52,6 +80,15 @@ View.RenderBody = (x, y) ->
   View.ctx.arc(x, y, View.body_size, 0, 2*Math.PI, true) # Draws a circle.
   View.ctx.fill()
 
+View.ShowSettings = () ->
+
+  if document.getElementById('settings').style.display == 'none'
+    document.getElementById('settings').style.display = 'block'
+  else
+    document.getElementById('settings').style.display = 'none'
+
+
+
 
 #-------------------------------------------------------------------------------
 # This block contains all code for the simulation engine.
@@ -59,9 +96,6 @@ View.RenderBody = (x, y) ->
 
 Engine.Initialize = () ->
   # There are certain things that need to happen before we can get started.
-
-  # Chance the label for the start button.
-  document.getElementById('start_button').innerHTML = 'Restart Simulation'
 
   # Seed the random number generator.  This generator lets us scatter particles evenly
   # at the simulation start.
@@ -76,6 +110,7 @@ Engine.Initialize = () ->
   Engine.run = true
   Engine.initial_speed = document.getElementById('Vi_control').value
   Engine.G = document.getElementById('G_control').value
+  Engine.wall = document.getElementById('wall_control').value
 
   # Now we can get started.  Update() is a recursive function that runs the simulation.
   View.InitializeViewport()
@@ -164,25 +199,25 @@ Engine.ApplyConstraints = () ->
     if Engine.pos_x[i] < 0
       # particle has gone off the left edge.
       Engine.pos_x[i] = 0
-      Engine.vel_x[i] = 0
+      Engine.vel_x[i] = -1 * Engine.wall * Engine.vel_x[i]
       Engine.acc_x[i] = 0
 
     if Engine.pos_x[i] > View.canvas.width
       # particle has gone off the right edge.
       Engine.pos_x[i] = View.canvas.width
-      Engine.vel_x[i] = 0
+      Engine.vel_x[i] = -1 * Engine.wall * Engine.vel_x[i]
       Engine.acc_x[i] = 0
 
     if Engine.pos_y[i] < 0
       # particle has gone off the top edge.
       Engine.pos_y[i] = 0
-      Engine.vel_y[i] = 0
+      Engine.vel_y[i] = -1 * Engine.wall * Engine.vel_y[i]
       Engine.acc_y[i] = 0
 
     if Engine.pos_y[i] > View.canvas.height
       # particle has gone off the bottom edge.
-      Engine.pos_y[i] = View.canvas.width
-      Engine.vel_y[i] = 0
+      Engine.pos_y[i] = View.canvas.height
+      Engine.vel_y[i] = -1 * Engine.wall * Engine.vel_y[i]
       Engine.acc_y[i] = 0
 
 Engine.SeedSimulation = () ->
@@ -231,16 +266,42 @@ Engine.RandomNumber = () ->
 # This code block handles User controls and updates settings here.
 #-------------------------------------------------------------------
 
+Engine.Begin = () ->
+  document.getElementById('pause_button').style.display = 'inline';
+  document.getElementById('play_button').style.display = 'none';
+  document.getElementById('start_button').onclick = -> window.Engine.Pause()
+  Engine.Initialize()
+
+Engine.Pause = () ->
+  window.clearTimeout View.render_id
+  document.getElementById('play_button').style.display = 'inline';
+  document.getElementById('pause_button').style.display = 'none';
+  document.getElementById('start_button').onclick = -> window.Engine.Continue()
+
+Engine.Continue = () ->
+  document.getElementById('pause_button').style.display = 'inline';
+  document.getElementById('play_button').style.display = 'none';
+  document.getElementById('start_button').onclick = -> window.Engine.Pause()
+  View.Update()
+
+Engine.Reset = () ->
+  window.clearTimeout View.render_id
+  Engine.Begin()
+
+
+
 Engine.ChangeN = () ->
-  
   if document.getElementById('n_control').value < Engine.n
     Engine.n = document.getElementById('n_control').value
   else
     Engine.n = document.getElementById('n_control').value
-    Engine.Initialize()
+    Engine.Reset()
 
 Engine.ChangeG = () ->
   Engine.G = document.getElementById('G_control').value
 
 Engine.Changedt = () ->
   Engine.dt = document.getElementById('dt_control').value
+
+Engine.ChangeWall = () ->
+  Engine.wall = document.getElementById('wall_control').value

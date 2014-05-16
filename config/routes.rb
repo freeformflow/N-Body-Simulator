@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  get '/'   => 'simulator#main'
-
+  get '/'       => 'simulator#main',   as: :main
+  get '/about'  => 'simulator#about',  as: :about
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

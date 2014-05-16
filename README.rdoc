@@ -1,11 +1,28 @@
 == README
 
-This is a (slightly unstable) first stab at physics on the web.  The app is served on Rails, but the engine is 
-written completely in CoffeeScript.  Particles are in a 2D box and are attracted to each other via
-(a tweaked) gravitational force.  The display is updated live with results from the engine.  It is drawn using HTML 5 canvas.
+This README would normally document whatever steps are necessary to get the
+application up and running.
 
-At the moment, there is an issue with the animation.  It only works in the Chrome browser, and I have to use an ugly hack
-to get it started.  For some reason, the code execution must be interuppted once for it to continue reguarly.  This is done
-with an alert box.  I'm not sure what's wrong with it currently.  My attempts to use requestAnimationFrame() have been
-unsuccessful, so I've pull out that code.
+Things you may want to cover:
+
+* Ruby version
+
+* System dependencies
+
+* Configuration
+
+* Database creation
+
+* Database initialization
+
+* How to run the test suite
+
+* Services (job queues, cache servers, search engines, etc.)
+
+* Deployment instructions
+
+* ...
+
+
+Please feel free to use a different markup language if you do not plan to run
 <tt>rake doc:app</tt>.
