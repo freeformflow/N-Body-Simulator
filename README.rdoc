@@ -10,7 +10,7 @@ diversity and values novel solutions that are effective. We consult for a variet
 of clients and really strive to be a part of the local development/start-up community.
 If we sound cool to you, check us out or contact one of our Sage Pandas at...
 
-<a href='http://www.pandastrike.com'>PandaStrike.com</a>
+www.pandastrike.com
 
 --------------------------------------------------------------------------------------
 
@@ -28,10 +28,9 @@ Though this source code is original, in-browser physics is an area of rapid
 development.  In particular, this simulator draws inspiration from Jasper Palfree
 of Well Caffeinated.
 
-<a href='https://github.com/PandaPup/N-Body-Simulator'>Source Code</a> <br>
-<a href='http://wellcaffeinated.net/articles/2013/04/16/playing-with-asm-js-and-browser-physics/'>Well Caffeinated</a> <br>
-<a href='//coffeescript.org'>CoffeeScript</a> <br>
-<a href='https://developer.mozilla.org/en-US/docs/Web/Guide/HTML/Canvas_tutorial'>Canvas<a/a>
+wellcaffeinated.net/articles/2013/04/16/playing-with-asm-js-and-browser-physics/
+coffeescript.org
+developer.mozilla.org/en-US/docs/Web/Guide/HTML/Canvas_tutorial
 
 --------------------------------------------------------------------------------------
 
@@ -55,4 +54,4 @@ parameter.  Perfectly elastic collisions keep energy in the system, inelastic
 ones drain it out.  Turning on particle-particle collision makes use of inelastic
 collisions.  The particles will clump up and not go very far.
 
-<a href='http://en.wikipedia.org/wiki/N-body_problem'>N-Body Problem</a>
+en.wikipedia.org/wiki/N-body_problem
