@@ -1,9 +1,22 @@
+@font-face
+{
+  font-family: Oxygen;
+  src: asset-url('Oxygen-Regular.ttf');
+}
+
+@font-face
+{
+  font-family: Oxygen;
+  src: asset-url('Oxygen-Bold.ttf');
+  font-weight: bold
+}
+
 
 body
 {
   background-color: #333;
   color: #fff;
-  font-family: Helvetica;
+  font-family: Oxygen;
   margin-top: 0;
 
   background-image:
@@ -90,7 +103,7 @@ a
 
 #about_button
 {
-  font-size: 29px;
+  font-size: 26px;
 }
 
 

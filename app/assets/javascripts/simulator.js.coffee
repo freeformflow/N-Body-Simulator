@@ -38,6 +38,16 @@ View.SizeCanvas = () ->
   document.getElementById('settings').style.display = 'none'
 
 
+  # Now we can measure the canvas's offset from the edges of the window.
+  # We'll need these values to figure out the cursor's location in simulation.
+  Engine.reference_x = document.getElementById('settings_overlay').offsetLeft
+  Engine.reference_y = document.getElementById('settings_overlay').offsetTop
+
+  Engine.user_x = null
+  Engine.user_y = null
+
+
+
 # Initialize the canvas view.
 View.InitializeViewport = () ->
   View.background_color = '#0066FF'
@@ -51,7 +61,11 @@ View.InitializeViewport = () ->
 # This function produces animation by updating the view when we repeatedly call it.
 View.Update = () ->
 
-  # First, wipe the view.
+  # We need to carefully time the animation loops.  We start our stopwatch now and
+  # check it when we're done drawing.
+  render_start_time = new Date().getTime()
+
+  # Begin drawing.... First, wipe the view.
   View.ctx.clearRect 0, 0, View.canvas.width, View.canvas.height
 
   # Now, create a new background.
@@ -66,10 +80,22 @@ View.Update = () ->
   for i in [0..Engine.n - 1]
     View.RenderBody Engine.pos_x[i], Engine.pos_y[i]
 
+  # We're done drawing.  Check the stopwatch now.
+  elapse = new Date().getTime() - render_start_time
+
   # Rinse and repeat...  This recursive will call itself indefinitely.
   callback = -> View.Update()
-  #window.requestAnimationFrame callback
-  View.render_id = window.setTimeout callback, 20
+
+  # We need at least 25 frames per second to give realistic motion.
+  # That is 40 ms per frame.  If we're lucky, we have time to spare, and
+  # we can ask the CPU to idle.  Otherwise, move on to the next frame right away,
+  # but lag will be noticeable...  :(
+  if elapse < 40
+    View.render_id = window.setTimeout callback, 40 - elapse
+  else
+    View.render_id = window.setTimeout callback, 0
+
+
 
 
 # This function draws a single particle.  It will be called frequently, haha.
@@ -111,6 +137,8 @@ Engine.Initialize = () ->
   Engine.initial_speed = document.getElementById('Vi_control').value
   Engine.G = document.getElementById('G_control').value
   Engine.wall = document.getElementById('wall_control').value
+  Engine.user_input = document.getElementById('input_control').checked
+  Engine.sticky = document.getElementById('sticky_control').checked
 
   # Now we can get started.  Update() is a recursive function that runs the simulation.
   View.InitializeViewport()
@@ -157,6 +185,12 @@ Engine.ForceEvaluation = () ->
     Engine.acc_x[i] = 0
     Engine.acc_y[i] = 0
 
+  Engine.collide_i = []
+  Engine.collide_j = []
+  Engine.collide_x = []
+  Engine.collide_y = []
+  Engine.collide_idist = []
+
   # We can more efficently calculat this pair-wise sum by doing it for only the
   # Upper Triangle of the pair matrix.  This way we only calculate the distance
   # between each pair only once.
@@ -166,7 +200,8 @@ Engine.ForceEvaluation = () ->
       # Start by geting the distance between i and j
       x = Engine.pos_x[i] - Engine.pos_x[j]
       y = Engine.pos_y[i] - Engine.pos_y[j]
-      dist = Math.sqrt(x*x + y*y)
+      dist_sq = x*x + y*y
+      dist_inverse = 1 / Math.sqrt(dist_sq)
 
       # Use this distance to get the force between i and j
       # Force = -(dE/dr), which for gravitation is (G * m_i * m_j) / distance**2
@@ -175,50 +210,100 @@ Engine.ForceEvaluation = () ->
 
       # Only apply this to particles that are far enough apart. Otherwise, the
       # particles sling themselves past one another.
-      if dist > 20
-        force = Engine.G / (dist * dist)
+      if dist_sq > 400
+        force = Engine.G / dist_sq
 
         # This force is applied to i.
-        Engine.acc_x[i] = Engine.acc_x[i] - force * (x / dist)
-        Engine.acc_y[i] = Engine.acc_y[i] - force * (y / dist)
+        Engine.acc_x[i] = Engine.acc_x[i] - force * x * dist_inverse
+        Engine.acc_y[i] = Engine.acc_y[i] - force * y * dist_inverse
 
         # Now the opposite and equal force is applied to j.
-        Engine.acc_x[j] = Engine.acc_x[j] + force * (x / dist)
-        Engine.acc_y[j] = Engine.acc_y[j] + force * (y / dist)
+        Engine.acc_x[j] = Engine.acc_x[j] + force * x * dist_inverse
+        Engine.acc_y[j] = Engine.acc_y[j] + force * y * dist_inverse
+
+      else if Engine.sticky and dist_sq < 12 and dist_sq > 1
+        # If the User has requested particle-particle collisions, we note any overlapping
+        # particles here.
+        # We model these collisions as inelastic, meaning only momentum is conserved.
+
+        Engine.collide_i.push i
+        Engine.collide_j.push j
+        Engine.collide_x.push x
+        Engine.collide_y.push y
+        Engine.collide_idist.push dist_inverse
+
+
+  # Now, if the user has opted to use the cursor as an attractor of particles,
+  # we calculate those forces here.
+  if Engine.user_input and Engine.user_x != null
+    for i in [0..Engine.n - 1]
+      x = Engine.pos_x[i] - Engine.user_x
+      y = Engine.pos_y[i] - Engine.user_y
+      dist_sq = x*x + y*y
+      dist_inverse = 1 / Math.sqrt(dist_sq)
+
+      if dist_sq > 400
+        force = 100000 / dist_sq
+
+        Engine.acc_x[i] = Engine.acc_x[i] - force * x * dist_inverse
+        Engine.acc_y[i] = Engine.acc_y[i] - force * y * dist_inverse
+
 
 
 Engine.ApplyConstraints = () ->
   # Apply constraints.  These will keep the particles within the box, because if
-  # they get loose, there is not enough force to bring them back.  We also use the
+  # they get loose, there is not enough force to bring them back.  We can also use the
   # walls to bleed energy out of the system and make it behave better.  If a
   # particle goes past a wall, it is put back within bounds and its velocity
-  # in that direction is set to zero.
+  # in that direction may be modified.
 
   for i in [0..Engine.n - 1]
 
     if Engine.pos_x[i] < 0
       # particle has gone off the left edge.
       Engine.pos_x[i] = 0
-      Engine.vel_x[i] = -1 * Engine.wall * Engine.vel_x[i]
+      Engine.vel_x[i] = -Engine.wall * Engine.vel_x[i]
       Engine.acc_x[i] = 0
 
-    if Engine.pos_x[i] > View.canvas.width
+    else if Engine.pos_x[i] > View.canvas.width
       # particle has gone off the right edge.
       Engine.pos_x[i] = View.canvas.width
-      Engine.vel_x[i] = -1 * Engine.wall * Engine.vel_x[i]
+      Engine.vel_x[i] = -Engine.wall * Engine.vel_x[i]
       Engine.acc_x[i] = 0
 
-    if Engine.pos_y[i] < 0
+    else if Engine.pos_y[i] < 0
       # particle has gone off the top edge.
       Engine.pos_y[i] = 0
-      Engine.vel_y[i] = -1 * Engine.wall * Engine.vel_y[i]
+      Engine.vel_y[i] = -Engine.wall * Engine.vel_y[i]
       Engine.acc_y[i] = 0
 
-    if Engine.pos_y[i] > View.canvas.height
+    else if Engine.pos_y[i] > View.canvas.height
       # particle has gone off the bottom edge.
       Engine.pos_y[i] = View.canvas.height
-      Engine.vel_y[i] = -1 * Engine.wall * Engine.vel_y[i]
+      Engine.vel_y[i] = -Engine.wall * Engine.vel_y[i]
       Engine.acc_y[i] = 0
+
+    if Engine.sticky
+      # If the User has requested particle-particle collisions, we calculate here.
+      # We model these collisions as inelastic, meaning only momentum is conserved.
+
+      for k in [0..Engine.collide_i.length - 1]
+
+        i = Engine.collide_i[k]
+        j = Engine.collide_j[k]
+        x = Engine.collide_x[k]
+        y = Engine.collide_y[k]
+        dist_inverse = Engine.collide_idist[k]
+
+        Engine.pos_x[i] = Engine.pos_x[j] + 1.2 * x
+        Engine.pos_y[i] = Engine.pos_y[j] + 1.2 * y
+
+        Engine.vel_x[i] = Engine.vel_x[j] =
+            0.5 * (Engine.vel_x[i] + Engine.vel_x[j])
+
+        Engine.vel_y[i] = Engine.vel_y[j] =
+            0.5 * (Engine.vel_y[i] + Engine.vel_y[j])
+
 
 Engine.SeedSimulation = () ->
   # This function seeds the simulation with particles.  It allocates space for
@@ -260,6 +345,16 @@ Engine.RandomNumber = () ->
   Engine.seed =  (1103515245 * A + 12345) % 2147483648
 
   return Engine.seed / 2147483648
+
+
+Engine.GetMousePos = (event) ->
+  Engine.user_x = event.clientX
+  Engine.user_y = event.clientY
+
+  Engine.user_x = Engine.user_x - Engine.reference_x
+  Engine.user_y = Engine.user_y - Engine.reference_y
+
+
 
 
 #-------------------------------------------------------------------
@@ -305,3 +400,21 @@ Engine.Changedt = () ->
 
 Engine.ChangeWall = () ->
   Engine.wall = document.getElementById('wall_control').value
+
+Engine.ChangeInput = () ->
+  box = document.getElementById('input_control')
+
+  if box.checked
+    Engine.user_input = true
+    document.getElementById('settings_overlay').onmousemove = -> window.Engine.GetMousePos(event)
+  else
+    Engine.user_input = false
+    document.getElementById('settings_overlay').onmousemove = null
+
+Engine.ChangeSticky = () ->
+  box = document.getElementById('sticky_control')
+
+  if box.checked
+    Engine.sticky = true
+  else
+    Engine.sticky = false
