@@ -223,8 +223,7 @@ Engine.ForceEvaluation = () ->
 
       else if Engine.sticky and dist_sq < 12 and dist_sq > 1
         # If the User has requested particle-particle collisions, we note any overlapping
-        # particles here.
-        # We model these collisions as inelastic, meaning only momentum is conserved.
+        # particles here.  We address these pairs inside Engine.ApplyConstraints()
 
         Engine.collide_i.push i
         Engine.collide_j.push j
@@ -295,9 +294,13 @@ Engine.ApplyConstraints = () ->
         y = Engine.collide_y[k]
         dist_inverse = Engine.collide_idist[k]
 
+        # Move the particles so they are no longer overlapping.
         Engine.pos_x[i] = Engine.pos_x[j] + 1.2 * x
         Engine.pos_y[i] = Engine.pos_y[j] + 1.2 * y
 
+        # Modify both particle's velocity.  Because they have the same mass
+        # their final velcities are equal and the average of their inital velocities.
+        # m_i * v_i  + m_j * v_j  = M * V   =>  V = (v_i + v_j) / 2 
         Engine.vel_x[i] = Engine.vel_x[j] =
             0.5 * (Engine.vel_x[i] + Engine.vel_x[j])
 
