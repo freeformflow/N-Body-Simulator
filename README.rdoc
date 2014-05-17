@@ -28,9 +28,11 @@ Though this source code is original, in-browser physics is an area of rapid
 development.  In particular, this simulator draws inspiration from Jasper Palfree
 of Well Caffeinated.
 
-wellcaffeinated.net/articles/2013/04/16/playing-with-asm-js-and-browser-physics/
-coffeescript.org
-developer.mozilla.org/en-US/docs/Web/Guide/HTML/Canvas_tutorial
+www.wellcaffeinated.net/articles/2013/04/16/playing-with-asm-js-and-browser-physics/
+
+www.coffeescript.org
+
+www.developer.mozilla.org/en-US/docs/Web/Guide/HTML/Canvas_tutorial
 
 --------------------------------------------------------------------------------------
 
@@ -54,4 +56,4 @@ parameter.  Perfectly elastic collisions keep energy in the system, inelastic
 ones drain it out.  Turning on particle-particle collision makes use of inelastic
 collisions.  The particles will clump up and not go very far.
 
-en.wikipedia.org/wiki/N-body_problem
+www.wikipedia.org/wiki/N-body_problem
