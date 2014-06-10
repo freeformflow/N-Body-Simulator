@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+
+<head>
+  <title>N-Body Simulator</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="/images/logo.ico">
+  <script src="coffee/simulator.js"> </script>
+  <link rel="stylesheet" href="/scss/simulator.css">
+</head>
+
+
+<body>
+<div id='nav_bar'>
+  <a href='http://www.pandastrike.com'><img src='/images/pandastrike_logo.png' id='logo'> </a>
+  <h1 id='title'>N-Body Simulator</h1>
+</div>
+
+
+  <ul id='controls'>
+    <li id='start_button' onclick='window.Engine.Begin()'>
+      <img src='/images/play.png' id='play_button'>
+      <img src='/images/pause.png' id='pause_button' style='display:none'>
+    </li>
+
+    <li id='reset_button' onclick='window.Engine.Reset()'>
+      <img src='/images/reset.png'>
+    </li>
+
+    <li id='settings_button' onclick='window.View.ShowSettings()'>
+      <img src='/images/settings.png'>
+    </li>
+
+    <a href="/about.html">
+      <li id='about_button'>
+        About
+      </li>
+    </a>
+  </ul>
+
+
+<div id='settings_overlay'>
+
+  <canvas id='view'> </canvas>
+
+  <div id='settings'>
+
+    <p><b> Number of Particles: </b></p>
+    1 <input type="range" id='n_control' onchange='window.Engine.ChangeN()'
+        min="1" max="1000" value='200' step='1'> 1000
+
+    <br> <br>
+
+    <p><b> Gravity Strength: </b></p>
+    None <input type="range" id='G_control' onchange='window.Engine.ChangeG()'
+    min='0' max='10000' value='1000' step='1'> Strong
+
+    <br> <br>
+
+    <p><b> Starting Rotation Speed: </b></p>
+    Clockwise <input type='range' id='Vi_control' value='20'
+    min='-100' max='100' value='20' step='1'> Counter-Clockwise
+
+    <br> <br>
+
+    <p><b> Speed: </b></p>
+    Slow <input type='range' id='dt_control' onchange='window.Engine.Changedt()'
+    min='0.01' max='0.2' step='0.01' value='0.06'> Fast
+
+    <br> <br>
+
+    <p><b> Wall Collisions: </b></p>
+    Inelastic <input type='range' id='wall_control' onchange='window.Engine.ChangeWall()'
+    min='0' max='1' step='0.1' value='0.3'> Elastic
+
+    <br> <br>
+
+    <p><b> Particles Sense Cursor?: </b></p>
+    <input type='checkbox' id='input_control' onchange='window.Engine.ChangeInput()'> Yes
+
+    <br> <br>
+
+    <p><b> Particle Collision: </b></p>
+    <input type='checkbox' id='collide_control' onchange='window.Engine.ChangeCollide()'> On
+    <input type='checkbox' id='sticky_control' onchange='window.Engine.ChangeSticky()'> Sticky
+  </div>
+
+</div>
+
+
+
+
+
+<script>
+  window.View.SizeCanvas();
+  window.Engine.Begin();
+</script>
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-45891377-1', 'pandastrike.com');
+  ga('send', 'pageview');
+
+</script>
+
+</body>
+</html>
