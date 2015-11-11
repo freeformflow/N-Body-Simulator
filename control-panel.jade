@@ -1,0 +1,21 @@
+div#controlPanel.panel
+  div.panda-buttons
+    div.panda-btn-container
+      div(onclick="window.togglePlay()").btn.btn-lg.panda-btn
+        span.glyphicon.glyphicon-play.hidden
+        span.glyphicon.glyphicon-pause
+  
+    div.panda-btn-container
+      div(onclick="window.restart()").btn.btn-lg.panda-btn
+        span.glyphicon.glyphicon-refresh
+      
+    div.panda-btn-container
+      div(onclick="window.toggleOverlay()").btn.btn-lg.panda-btn
+        span.glyphicon.glyphicon-cog
+      
+    div.panda-btn-container
+      div.btn.btn-lg.panda-btn
+        span.glyphicon.glyphicon-info-sign
+        
+  div.panda-buttons-spacer
+      

@@ -1,0 +1,58 @@
+//- We wrap the settings panel twice so we can apply neat visual effects.
+div#canvasOverlay
+  canvas#view
+  div#settingsOverlay.hidden
+    div#settingsBackground
+    div#settings
+      
+      p(style="margin-top:0")
+        b Number of Particles:
+      input(type="range" min="1" max="2000" step="1" value="500" onchange="window.setN()")#n_control
+      label.leftside
+        | 1
+      label.rightside
+        | 2000
+
+      p
+        b Gravity Strength:
+      input(type="range" min="0" max="1000" step="1" value="100" onchange="window.setG()")#G_control
+      label.leftside
+        | None
+      label.rightside
+        | Strong
+      
+      p
+        b Time Speed:
+      input(type="range" min="0.01" max="0.6" step="0.01" value="0.2" onchange="window.setDt()")#dt_control
+      label.leftside
+        | Slow
+      label.rightside
+        | Fast (unstable)
+      
+      p
+        b Starting Rotation Speed:
+      input(type="range" min="-100" max="100" step="1" value="20" onchange="window.setVi()")#Vi_control
+      label.leftside
+        | Clockwise
+      label.rightside
+        | Counter-Clockwise
+      
+      p
+        b Wall Collisions:
+      input(type="range" min="0" max="1" step="0.05" value="0.3" onchange="window.setWall()")#wall_control
+      label.leftside
+        | Inelastic
+      label.rightside
+        | Elastic
+      
+      p
+        b Particles Sense Cursor?
+      input(type="checkbox" onchange="window.setInput()")#input_control 
+      | &nbsp;&nbsp; Yes 
+        
+      p
+        b Particle Collision:
+      //- p(style="margin-top:0") On &nbsp;&nbsp;
+      //-   input(type="checkbox" onchange="window.setCollide()")#collide_control 
+      input(type="checkbox" onchange="window.setSticky()")#sticky_control
+      | &nbsp;&nbsp; Yes  
