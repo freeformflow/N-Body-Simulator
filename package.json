@@ -1,0 +1,24 @@
+{
+  "name": "n-body-simulator",
+  "version": "1.0.0",
+  "description": "Static site that serves a 2D physics simulation.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node_modules/.bin/h9 serve",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/freeformflow/N-Body-Simulator.git"
+  },
+  "author": "David Harper",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/freeformflow/N-Body-Simulator/issues"
+  },
+  "homepage": "https://github.com/freeformflow/N-Body-Simulator#readme",
+  "dependencies": {
+    "haiku9": "^1.1.0-alpha-05"
+  },
+  "engine": "node >= 4.0.0"
+}

@@ -1,0 +1,5 @@
+source: "public"
+target: "www"
+blog:
+  page:
+    size: 10
